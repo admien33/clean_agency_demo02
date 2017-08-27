@@ -1,0 +1,44 @@
+<article>
+  
+  <ui-view></ui-view>
+  
+</article>
+
+
+<script type="text/ng-template" id="templateDetailPortfolio.html">
+
+  <header class="articleHeader intro-header box_no_bg">
+    <div class="row">
+      <div class="box">     
+        <div class="col-md-6">         
+          <img class="img_header img-responsive img-border-left" src="{% raw %}{{$ctrl.article.path_header_img}}{% endraw %}" alt="">
+        </div>
+        <div class="col-md-6">      
+          <div class="post-heading">
+            <h1 class="heading"> <span ng-bind="$ctrl.article.title"></span> </h1>
+            <h2 class="subheading"> <span ng-bind="$ctrl.article.subtitle"></span></h2>            
+            <span class="meta">Posted on <span class='date'><span ng-bind="$ctrl.article.meta_date"></span> </span></span>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="articleDetail row">
+    <div class="articleContent col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+      <span ng-bind-html="$ctrl.content"></span>
+    </div>
+  </div>
+
+  <div class=" col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">      
+    <ul class="pager">
+      <li class="previous" ng-if="$ctrl.articlePrevious != undefined">
+        <a ui-sref="detail({_articleUrl: $ctrl.articlePrevious.relative_url })" title="{% raw %}{{$ctrl.articlePrevious.title}}{% endraw %}">&larr; Previous Article</a>
+      </li>
+      <li class="next" ng-if="$ctrl.articleNext != undefined">         
+        <a ui-sref="detail({_articleUrl: $ctrl.articleNext.relative_url })" title="{% raw %}{{$ctrl.articleNext.title}}{% endraw %}">Next Article &rarr;</a>
+      </li>
+    </ul>
+  </div>
+  
+</script>

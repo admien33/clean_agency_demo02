@@ -1,0 +1,42 @@
+---
+layout: compress
+---
+
+{% comment %} import scss templates {% endcomment %}
+
+{% capture data_import_scss %}
+	{% include coll_ext/site-config/add-scss/bootstrap_import_critic_add_custom.html %}
+	{% include coll_ext/site-config/add-scss/template_common_critic_page_site.html %}
+{% endcapture %}
+
+{% comment %} import js templates {% endcomment %}
+{% assign data_import_js = '' %}
+{% include coll_ext/site-config/add-html/js_common_import.html 
+  folder_templates=site.data.templates
+  type_added_ref='common_pages'
+  not_ouput_hmtl=true
+%}
+{% assign data_import_js = list_js_import | remove_first: delim %}
+{% if data_import_js != "" %}
+	{% comment %}filter last delim{% endcomment %}
+	{% assign offsetSlice = data_import_js.size | minus: delim.size %}
+	{% assign data_import_js = data_import_js | slice: 0,offsetSlice %}
+{% endif %}
+
+{% comment %}json content{% endcomment %}
+{
+  "pages":
+  [
+		{
+			"id": "common_critic",
+		  "import_scss": "{{data_import_scss}}",
+		  "import_js": "{{data_import_js}}"
+		}
+	],
+  "config":
+  {  	
+  	"var_custom_style": "",
+  	"delim_import_js": "{{delim}}"  	
+  }
+}
+

@@ -1,0 +1,91 @@
+<article >  	
+  <ui-view></ui-view>    
+</article>
+
+
+
+<script type="text/ng-template" id="templateListBlog.html">
+
+	<div class = "col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	  <div class="row">
+	    <div class="col-lg-12">
+	      <div class="col-lg-8 col-md-6">
+	        <p><i class="fa fa-search" aria-hidden="true"></i><input ng-model="$ctrl.query"></p>
+	      </div>
+	      <div class="col-lg-4 col-md-6">
+	        <p>Sort by:
+	          <select ng-model="$ctrl.orderProp">          
+	            <option value="-raw_date">Newest</option>
+	            <option value="title">Alphabetical</option>
+	          </select>
+	        </p>
+	      </div>	     
+	    </div>
+	  </div>
+	  <div class="row" ng-repeat="_article in $ctrl.articles | filter:$ctrl.query | orderBy:$ctrl.orderProp">
+	    <div class="post-preview">
+	      
+	      <a ui-sref="detail({_articleUrl: _article.relative_url })">
+	        <h2 class="post-title">
+	          <span ng-bind="_article.title"></span>
+	        </h2>
+	        <h3 class="post-description">
+	          <span ng-bind="_article.description"></span>
+	        </h3>
+	      </a>
+	      <p class="post-meta">
+	        Posted on <span ng-bind="_article.meta_date"></span>
+	      </p>
+	    </div>
+	    <hr>    
+	  </div>
+	</div>
+ 
+</script>
+
+
+<script type="text/ng-template" id="templateDetailBlog.html">
+
+	<header class="articleHeader intro-header box_no_bg">
+    <div class="row">
+      <div class="box">     
+        <div class="col-md-6">         
+          <img class="img_header img-responsive img-border-left" src="{% raw %}{{$ctrl.article.path_header_img}}{% endraw %}" alt="">
+        </div>
+        <div class="col-md-6">      
+          <div class="post-heading">
+            <h1 class="heading"> <span ng-bind="$ctrl.article.title"></span> </h1>
+            <h2 class="subheading"> <span ng-bind="$ctrl.article.subtitle"></span></h2>            
+            <span class="meta">Posted on <span class='date'><span ng-bind="$ctrl.article.meta_date"></span> </span></span>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </header>  
+
+  <div class=" col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">      
+  	<ul class="pager">
+  		<li class="next" >	       
+        <a  ui-sref="articles">List Articles</a>
+      </li>     
+    </ul>
+  </div>
+
+  <div class="articleDetail row">
+    <div class="articleContent col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+    	<span ng-bind-html="$ctrl.content"></span>
+    </div>
+  </div>
+
+  <div class=" col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">      
+  	<ul class="pager">
+  		<li class="previous" ng-if="$ctrl.articlePrevious != undefined">	       
+        <a ui-sref="detail({_articleUrl: $ctrl.articlePrevious.relative_url })" title="{% raw %}{{$ctrl.articlePrevious.title}}{% endraw %}">&larr; Previous Article</a>
+      </li>
+      <li class="next" ng-if="$ctrl.articleNext != undefined">	       
+        <a ui-sref="detail({_articleUrl: $ctrl.articleNext.relative_url })" title="{% raw %}{{$ctrl.articleNext.title}}{% endraw %}">Next Article &rarr;</a>
+      </li>
+    </ul>
+  </div>
+  
+</script>

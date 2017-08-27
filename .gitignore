@@ -1,0 +1,12 @@
+node_modules
+webpack
+_site
+_site_assets_config
+src/.sass-cache
+src/.asset-cache
+src/.jekyll-metadata
+src/assets/dist
+src/_assets/css_wp
+src/_data/webpacked_assets
+src/_data/coll_ext
+src/_includes/coll_ext
