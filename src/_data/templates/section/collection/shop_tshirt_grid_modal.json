@@ -1,0 +1,45 @@
+{
+	"template": "shop_tshirt_grid_modal",
+	"import_html_extra_class": "shop_tshirt_grid",
+
+	"import_html":
+	[
+		{
+			"path": 
+			[
+				"templates/section/shop_tshirt_grid_modal.html"
+			]
+		}
+	],
+
+	"import_scss":
+	[
+		{
+			"added_on": "common_non_critic",
+			"path": 
+			[
+				"templates/section/shop_tshirt_grid_modal.scss"
+			]			
+		}
+	],
+	
+	"import_js":
+	[
+		{
+			"added_on": "custom_page",		
+			"path": 
+			[
+				"template_shop_tshirt_grid.js",
+				"template_shop_tshirt_grid_modal.js"
+			]
+			
+		},		
+		{
+			"added_on": "common_pages",
+			"path": 
+			[
+
+			]				
+		}
+	]
+}

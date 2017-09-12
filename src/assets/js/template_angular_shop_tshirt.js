@@ -3,56 +3,64 @@ import 'angular';
 import 'angular-ui-router';
 import 'angular-sanitize';
 
+import './components/util/snipcart.js'
 
-import {articles} from "./components/blog.articles";
-import {detail} from "./components/blog.detail";
-import {BlogService} from "./components/blog.service";
+import {articles} from "./components/shop.articles";
+import {detail} from "./components/shop.detail";
+import {ShopService} from "./components/shop.service";
 // import {ShopSnipcartProvider} from "./components/shop.snipcart.provider";
 
+require("expose-loader?jQuery!jquery");
 
-var jekyllApp = angular.module('JekyllApp', ['ui.router','ngSanitize']);
+var jekyllApp = angular.module('JekyllApp', ['ui.router','ngSanitize','snipcart.service']);
 
 
-jekyllApp.config(['$compileProvider', '$locationProvider', '$stateProvider', '$urlServiceProvider', '$provide',
-	function ($compileProvider, $locationProvider, $stateProvider, $urlServiceProvider, $provide) {
+jekyllApp.config(['$compileProvider', '$locationProvider', '$stateProvider', '$urlServiceProvider', '$provide', '$snipcartProvider',
+	function ($compileProvider, $locationProvider, $stateProvider, $urlServiceProvider, $provide, $snipcartProvider) {
 
   // optim production
   $compileProvider.debugInfoEnabled(false);
  
 	//$location service, keep history browser
 	//see > 1.6.0 : default hashbang '!', https://docs.angularjs.org/guide/migration#-location-
-  // default hashbang mode used, V1;  jekyll need permalink /blog/index.html; but in html5 mode, index.html is filtering, todo eval with rewrite url 
+  // default hashbang mode used, V1;  jekyll need permalink /shop/index.html; but in html5 mode, index.html is filtering, todo eval with rewrite url 
 	$locationProvider.html5Mode(false).hashPrefix('!');
-  
-	$provide.service('BlogService', BlogService);	
+
+	$provide.service('ShopService', ShopService);
+
+  $snipcartProvider.apiKey = 'NWNjOWZhYjctYmE1ZS00MDM3LThkNjUtZmE5M2NiMTU1NzAwNjM2MjYzNTE1MzM5ODg1ODkw';
+
+
+  // $provide.provider('ShopSnipcartProvider', ShopSnipcartProvider);
+	
 
 	// An array of state definitions
   var states = [	
     { 
       name: 'articles', url: '/articles', component: 'articles',
       resolve: {
-        articles: ['BlogService',function(BlogService) {
-          return BlogService.getAllArticles();
+        articles: ['ShopService',function(ShopService) {
+          return ShopService.getAllArticles();
         }],
-        config: ['BlogService',function(BlogService) {
-         return BlogService.getConfig();
+        config: ['ShopService',function(ShopService) {
+         return ShopService.getConfig();
         }]
       }
     },
     { 
       name: 'detail', url: '/{_articleUrl:any}', component: 'detail',
       resolve: {
-        article: ['BlogService','$transition$',function(BlogService, $transition$) {
-          return BlogService.getArticle($transition$.params()._articleUrl);
+        article: ['ShopService','$transition$',function(ShopService, $transition$) {
+          return ShopService.getArticle($transition$.params()._articleUrl);
         }],
-        articlePrevious: ['BlogService','$transition$',function(BlogService, $transition$) {
-          return BlogService.getPreviousArticle($transition$.params()._articleUrl);
+        articlePrevious: ['ShopService','$transition$',function(ShopService, $transition$) {
+          return ShopService.getPreviousArticle($transition$.params()._articleUrl);
         }],
-        articleNext: ['BlogService','$transition$',function(BlogService, $transition$) {
-          return BlogService.getNextArticle($transition$.params()._articleUrl);
+        articleNext: ['ShopService','$transition$',function(ShopService, $transition$) {
+          return ShopService.getNextArticle($transition$.params()._articleUrl);
         }],
-        content: ['BlogService', '$transition$', function(BlogService, $transition$) {
-          return BlogService.getArticleContent($transition$.params()._articleUrl);
+        content: ['ShopService', '$transition$', function(ShopService, $transition$) {
+          return ShopService.getArticleContent($transition$.params()._articleUrl);
         }]
       }
     }

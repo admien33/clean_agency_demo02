@@ -15,9 +15,11 @@
 {% comment %}specific, add html part modal : id_section and template_modal ref{% endcomment %}
 {% comment %} ! init array before loop on sections page template {% endcomment %}
 {% assign template_modal = 'portfolio_grid_modal_partModal' %}
+
 {% assign add_modal_html_template = add_modal_html_template | append: template_modal | append: delim %}
 {% assign add_modal_html_path_section = add_modal_html_path_section | append: path_section | append: delim %}
 {% assign add_modal_html_custom_path_items = add_modal_html_custom_path_items | append: custom_path_items | append: delim %}
+
 
 
 {% include coll_ext/extract/site_subsection.html 

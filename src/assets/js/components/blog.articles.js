@@ -8,7 +8,8 @@ export const articles = {
 
 	controller: ['$http', function BlogListController($http) {
     var self = this;
-    self.orderProp = '-raw_date';  
+    self.orderProp = '-raw_date';
+
 	
   }]
   

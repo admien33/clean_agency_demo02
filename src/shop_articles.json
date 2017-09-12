@@ -1,0 +1,84 @@
+---
+layout: compress
+---
+
+{% assign collection_dataset = 'detailed-contents' %}
+{% assign name_dataset = 'shop' %}
+{% assign force_to_common_article_url = false %}
+
+
+{% include coll_ext/json_dataset/init_angjs_articles.html %}
+{% comment %}
+  output, meta items on dataset : size_all_items, include coll_ext/extract/item/from_all.html
+{% endcomment %}
+
+{
+  "list":
+  [
+
+  {% for index_item in (0..size_all_items) %}
+
+  	{% include coll_ext/extract/item/from_all.html index=index_item %}
+
+    {% comment %}extract relative_url_angjs_article, include first init_angjs_articles.html {% endcomment %}
+    {% include coll_ext/json_dataset/relative_url_angjs_article.html 
+      path=item.path
+    %}
+    
+    {% comment %}extract path_json_article{% endcomment %}
+    {% include coll_ext/json_dataset/path_json_article.html
+      permalink=item.permalink
+      path=item.path
+    %}
+  
+  	{% comment %}path_img_src{% endcomment %}
+    {% include templates/_utils/extract/path_img_src.html 
+      path_image=item.styles.first.image
+    %}
+
+
+
+  	{% comment %}<!-- json data -->{% endcomment %}
+    {
+      "relative_url": "{{relative_url_angjs_article}}",
+    	"path_json" : "{{path_json_article}}",
+    	"title" : "{{item.title }}",
+      "price" : "{{item.price }}",
+      "id" : "{{item.sku }}",
+      "raw_date" : "{{item.date-publication}}",
+      "meta_date" : "{{item.date-publication | date: "%B %-d, %Y"}}",
+      {% comment %}"path_header_img" : "{{path_img_src}}",{% endcomment %}
+      "description" : "{{item.content}}",
+      "image" : "{{ path_img_src }}",
+      "text_button": "Buy it for ${{ item.price }}",
+
+      {% comment %}specific shop tshirt{% endcomment %}
+      "styles": {{item.styles | jsonify}},
+      "custom1_name" : "Size",
+      "custom1_options" : "{{ item.sizes | join: '|' }}",
+      "custom1_value" : "Medium",
+
+      "custom2_name" : "Color",
+        {% assign colors = "" %}
+        {% for style in item.styles %}
+          {% assign colors = colors | append: '|' | append: style.name %}
+        {% endfor %}
+        {% assign colors = colors | remove_first: '|' %}
+      "custom2_options" : "{{ colors }}",
+        {% assign colors = colors | split: '|' %}
+      "custom2_value" : "{{colors[0]}}"
+
+    } {% unless forloop.last %},{% endunless %}
+
+  {% endfor %}
+
+  ],
+  "config":
+  [
+    {
+      "hash_prefix": "{{site.data.templates._extra.config.default_hash_prefix_article_url}}",
+      "url_page_index": "{{site.baseurl | append: '/' | append: default_page_article_url}}"
+    }
+  ]
+
+}

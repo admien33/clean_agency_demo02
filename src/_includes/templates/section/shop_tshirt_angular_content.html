@@ -4,47 +4,53 @@
 
 
 
-<script type="text/ng-template" id="templateListBlog.html">
+<script type="text/ng-template" id="templateListShop.html">
 
-	<div class = "col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+  <section class="shop_tshirt_grid">
+
 	  <div class="row">
-	    <div class="col-lg-12">
+	    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 	      <div class="col-lg-8 col-md-6">
 	        <p><i class="fa fa-search" aria-hidden="true"></i><input ng-model="$ctrl.query"></p>
 	      </div>
-	      <div class="col-lg-4 col-md-6">
-	        <p>Sort by:
-	          <select ng-model="$ctrl.orderProp">          
-	            <option value="-raw_date">Newest</option>
-	            <option value="title">Alphabetical</option>
-	          </select>
-	        </p>
-	      </div>	     
+        <div class="col-lg-4 col-md-6">
+          <p>Sort by:
+            <select ng-model="$ctrl.orderProp">          
+              <option value="-raw_date">Newest</option>
+              <option value="title">Alphabetical</option>
+            </select>
+          </p>
+        </div>  	       
 	    </div>
 	  </div>
-	  <div class="row" ng-repeat="_article in $ctrl.articles | filter:$ctrl.query | orderBy:$ctrl.orderProp">
-	    <div class="post-preview">
+
+	  <div class="row" ng-repeat="_article in $ctrl.articles | filter:$ctrl.query  | orderBy:$ctrl.orderProp">
+
+	    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 shop-item">
 	      
 	      <a ui-sref="detail({_articleUrl: _article.relative_url })">
 	        <h2 class="post-title">
 	          <span ng-bind="_article.title"></span>
 	        </h2>
 	        <h3 class="post-description">
-	          <span ng-bind="_article.description"></span>
+	          <span ng-bind-html="_article.description"></span>
 	        </h3>
 	      </a>
+
+        <div ng-repeat="style in _article.styles">
+          <p><span ng-bind="style.name"></span> {% raw %}{{$index + 1}}{% endraw %}</p>
+        </div>
 	      <p class="post-meta">
 	        Posted on <span ng-bind="_article.meta_date"></span>
 	      </p>
 	    </div>
 	    <hr>    
 	  </div>
-	</div>
- 
+  </section>
 </script>
 
 
-<script type="text/ng-template" id="templateDetailBlog.html">
+<script type="text/ng-template" id="templateDetailShop.html">
 
 	<header class="articleHeader intro-header box_no_bg">
     <div class="row">
@@ -66,7 +72,7 @@
   <div class=" col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">      
   	<ul class="pager">
   		<li class="next" >	       
-        <a  ui-sref="articles">List Articles</a>
+        <a  ui-sref="articles">Back</a>
       </li>     
     </ul>
   </div>
@@ -89,8 +95,3 @@
   </div>
   
 </script>
-
-
-<link id="snipcart-theme" type="text/css"
-    href="https://app.snipcart.com/themes/base/snipcart.css" 
-    rel="stylesheet" />

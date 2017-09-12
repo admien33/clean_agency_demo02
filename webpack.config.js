@@ -20,6 +20,7 @@ const config_source = config_yml.source || './src';
 const config_hosturl = config_yml.url || "";
 const config_baseurl = config_yml.baseurl || "";
 const config_staticman_url = config_yml.staticman.url || "";
+const config_snipcart_apikey = config_yml.snipcart.key || "";
 
 const config_path_input_js = config_yml.webpack_assets.js.path_input || './assets/js/';
 const config_path_output_js = config_yml.webpack_assets.js.path_output || './assets/';
@@ -201,6 +202,7 @@ const config = {
       HOST_URL: JSON.stringify(config_hosturl),
       BASE_URL: JSON.stringify(config_baseurl),
       STATICMAN_URL: JSON.stringify(config_staticman_url),
+      SNIPCART_APIKEY : JSON.stringify(config_snipcart_apikey),
       JSON_URL_POSTS: JSON.stringify("/posts.json")
     }),
     new webpack.optimize.UglifyJsPlugin(),

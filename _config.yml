@@ -162,6 +162,9 @@ angular_app:
 staticman:
   url: "https://arcane-woodland-50389.herokuapp.com/v2/entry/admien33/d2m.tech/staticman_data/comments"
 
+snipcart:
+  key: "NWNjOWZhYjctYmE1ZS00MDM3LThkNjUtZmE5M2NiMTU1NzAwNjM2MjYzNTE1MzM5ODg1ODkw"
+
 
 collections: 
   coll_site:
@@ -231,6 +234,12 @@ picture:
       source_default:
         width: "320"
     portfolio-thumbnail:
+      attr:
+        class: "img-responsive img-centered"
+        itemprop: "image"      
+      source_default:
+        width: "400"   
+    shop-thumbnail:
       attr:
         class: "img-responsive img-centered"
         itemprop: "image"      

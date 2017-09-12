@@ -8,7 +8,9 @@
     "items_text_img_fa",
     "portfolio_angular_content",
     "portfolio_grid_page_site",
-    "portfolio_last_items_grid"
+    "portfolio_last_items_grid",
+    "shop_tshirt_grid_modal",
+    "shop_tshirt_grid_modal_partModal"
   ],
 
   "default_template": "index_content",

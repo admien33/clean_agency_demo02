@@ -1,0 +1,101 @@
+{% comment %}<!--
+  param in :
+  common_param:
+    id_section
+    path_section
+    html_section_class
+    html_section_style
+    list_param_template_section
+    custom_path_items
+  param out:
+    add html
+
+ -->{% endcomment %}
+
+
+{% include coll_ext/extract/site_subsection.html 
+  path_section=path_section
+  custom_path_items= custom_path_items
+%}
+
+{% for index_item in (0..size_all_items) %}
+  
+  {% include coll_ext/extract/item/from_all.html index=index_item %}
+  {% assign index_modal = forloop.index %}
+
+  <div class="shop-modal modal fade" id="shopModal{{forloop.index}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+
+      <div class="close-modal" data-dismiss="modal">
+        <div class="lr">
+          <div class="rl">
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2">
+            <div class="modal-body">
+
+              <h2>{{ item.title }}</h2>
+              <hr class="star-primary">  
+
+              <div class="col-md-6">
+                <div class="shop-styles">
+                  {% for style in item.styles %}
+                    <div class="style" data-item-id="{{ forloop.index }}" {% unless forloop.first %}style="display: none"{% endunless %}>  
+                      {% picture shop-thumbnail {{style.image}} alt="{{item.title}}" %} 
+                    </div>
+                  {% endfor %}
+                  <div class="style-picker">
+                    {% for style in item.styles %}
+                      <div style="background-color: {{ style.color }}" data-item-id="{{ forloop.index }}"></div>
+                    {% endfor %}
+                  </div>
+                </div>
+                {% assign colors = "" %}
+                {% for style in item.styles %}
+                  {% assign colors = colors | append: '|' | append: style.name %}
+                {% endfor %}
+                {% assign colors = colors | remove_first: '|' %}
+                {% assign first_color = colors | split: '|' %}
+                {% assign first_color = first_color[0] %}
+                {% comment %}path_img_src{% endcomment %}
+                {% include templates/_utils/extract/path_img_src.html 
+                  path_image=item.styles.first.image
+                %}                
+              </div>
+
+              <div class="col-md-6">
+                <button class="snipcart-add-item btn btn-default"
+                  data-item-name="{{ item.title }}"
+                  data-item-id="{{ item.sku }}"
+                  data-item-image="{{ path_img_src }}"
+                  data-item-description=""
+                  data-item-custom1-name="Size"
+                  data-item-custom1-options="{{ item.sizes | join: '|' }}"
+                  data-item-custom1-value="Medium"
+                  data-item-custom2-name="Color"
+                  data-item-custom2-options="{{ colors }}"
+                  data-item-custom2-value="{{ first_color }}"
+                  data-item-url="{{ item.url }}" 
+                  data-item-price="{{ item.price }}"
+                  data-index-modal="{{index_modal}}">
+                  Buy it for ${{ item.price }}
+                </button>               
+                {{ item.content }}
+              </div>             
+              <div class="col-md-12">
+                <hr class="star-primary">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>{% comment %}/ .container{% endcomment %}
+      
+    </div>{% comment %}/ .modal-content{% endcomment %}
+  </div>
+
+{% endfor %}

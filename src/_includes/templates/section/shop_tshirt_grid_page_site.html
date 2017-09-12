@@ -1,0 +1,80 @@
+{% comment %}<!--
+  param in :
+  common_param:
+    id_section
+    path_section
+    html_section_class
+    html_section_style
+    list_param_template_section
+    custom_path_items
+  param out:
+    add html
+
+ -->{% endcomment %}
+
+{% assign row_col_presentation = "col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" %}
+{% assign row_col_items = "col-md-4 col-sm-6" %}
+
+{% comment %}extract data current section{% endcomment %}
+{% include coll_ext/extract/site_subsection.html 
+  path_section=path_section
+  custom_path_items= custom_path_items
+%}
+
+<section id="{{id_section}}" class="{{html_section_class}}" style="{{html_section_style}}">
+    
+    {% comment %}row presentation{% endcomment %}
+    <div class="row">
+      <div class="{{row_col_presentation}} text-center">
+        <h2 class="section-heading">{{meta_section.subtitle}} </h2>
+        <h3 class="section-subheading text-muted">{{meta_section.description}}</h3>
+        <hr>
+      </div>
+    </div>
+    
+    {% comment %}row items{% endcomment %}
+    <div class="row">
+     
+      {% comment %}loop items{% endcomment %}
+      {% for index_item in (0..size_all_items) %}
+        {% include coll_ext/extract/item/from_all.html index=index_item %}
+       
+        <div class="{{row_col_items}} shop-item">         
+
+          <div class="shop-styles">
+            {% for style in item.styles %}
+              <div class="style" data-item-id="{{ forloop.index }}" {% unless forloop.first %}style="display: none"{% endunless %}>
+                <a href="{{item.permalink | prepend: '/' | prepend: site.baseurl}}" class="shop-link">
+                  <div class="shop-hover">
+                    <div class="shop-hover-content">
+                      <i class="fa fa-shopping-basket fa-3x"></i>
+                    </div>
+                  </div>  
+                  {% picture shop-thumbnail {{style.image}} alt="{{item.title}}" %} 
+                </a>
+              </div>
+            {% endfor %}
+
+            <div class="style-picker">
+              {% for style in item.styles %}
+                <div style="background-color: {{ style.color }}" data-item-id="{{ forloop.index }}"></div>
+              {% endfor %}
+            </div>
+
+          </div>
+
+          <div class="shop-caption">
+            <h4>{{ item.title }}</h4>
+            {{ item.content }}
+            <p>${{ item.price }}</p>
+          </div>
+        </div>
+      {% endfor %}   
+    </div>{% comment %}end row items{% endcomment %}  
+
+</section>
+
+{% comment %}<script src="https://cdn.snipcart.com/scripts/2.0/snipcart.js" data-api-key="{{site.snipcart.key}}" id="snipcart"></script>
+
+<link href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css" rel="stylesheet" type="text/css" />
+{% endcomment %}
