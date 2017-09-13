@@ -1,6 +1,5 @@
 {
 	"template": "shop_tshirt_grid_modal",
-	"import_html_extra_class": "shop_tshirt_grid",
 
 	"import_html":
 	[

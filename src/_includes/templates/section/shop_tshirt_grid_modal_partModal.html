@@ -44,7 +44,7 @@
               <div class="col-md-6">
                 <div class="shop-styles">
                   {% for style in item.styles %}
-                    <div class="style" data-item-id="{{ forloop.index }}" {% unless forloop.first %}style="display: none"{% endunless %}>  
+                    <div class="style" data-item-id="{{ forloop.index }}" {% unless forloop.first %}style="display: none;"{% endunless %}>  
                       {% picture shop-thumbnail {{style.image}} alt="{{item.title}}" %} 
                     </div>
                   {% endfor %}

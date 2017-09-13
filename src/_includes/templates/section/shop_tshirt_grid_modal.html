@@ -31,11 +31,8 @@
   custom_path_items= custom_path_items
 %}
 
-<section id="{{id_section}}" class="{{html_section_class}}" style="{{html_section_style}}">
-
-  {% comment %}<a href="#" class="cart snipcart-checkout"><i class="fa fa-shopping-basket fa-lg"></i><span>View Cart</span></a>{% endcomment %}
- {% comment %} <button class="cart snipcart-checkout btn btn-default pull-right"><i class="fa fa-shopping-cart fa-lg"></i>View cart (<span class="snipcart-total-items">0</span>)</button>{% endcomment %}
-
+<section id="{{id_section}}" class="{{html_section_class}} shop_tshirt_grid" style="{{html_section_style}}">
+  
   <div class="snipcart-summary">
     <button class="snipcart-checkout btn btn-default pull-right">
       <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
@@ -60,7 +57,7 @@
       {% include coll_ext/extract/item/from_all.html index=index_item %}
       {% assign index_modal = forloop.index %}
      
-      <div class="{{row_col_items}} shop-item">         
+      <div class="{{row_col_items}} shop-item" data-index-modal="{{index_modal}}">         
 
         <div class="shop-styles">
           {% for style in item.styles %}

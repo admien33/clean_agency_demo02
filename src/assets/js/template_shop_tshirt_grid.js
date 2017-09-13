@@ -20,22 +20,22 @@ var data_item_
 
 	// load snipcart
 	function load() {
-      var script = window.document.createElement('script');
-      script.src = 'https://cdn.snipcart.com/scripts/2.0/snipcart.js';
-      script.id = 'snipcart';
+    var script = window.document.createElement('script');
+    script.src = 'https://cdn.snipcart.com/scripts/2.0/snipcart.js';
+    script.id = 'snipcart';
 
-      var dataApiKey = window.document.createAttribute('data-api-key');
-      dataApiKey.value = SNIPCART_APIKEY;
-      script.attributes.setNamedItem(dataApiKey);
+    var dataApiKey = window.document.createAttribute('data-api-key');
+    dataApiKey.value = SNIPCART_APIKEY;
+    script.attributes.setNamedItem(dataApiKey);
 
-      script.addEventListener('load', function () {        
-        console.log('load snipcart');
-      });
+    script.addEventListener('load', function () {        
+      console.log('load snipcart');
+    });
 
-      window.document.getElementsByTagName('head')[0].appendChild(script);
-    }
+    window.document.getElementsByTagName('head')[0].appendChild(script);
+  }
 
-    load();
+  load();
 
    //  $("button.snipcart-add-item").on("click", function() {
 			// var id_modal = "#shopModal"+$(this).attr('data-index-modal');
